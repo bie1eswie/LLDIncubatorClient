@@ -1,0 +1,161 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-4">
+    <h2>Create Company Profile</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a [routerLink]="['/starterview']">Home</a>
+      </li>
+      <li class="active">
+        <strong>Basic Information</strong>
+      </li>
+    </ol>
+  </div>
+</div>
+<div class="wrapper wrapper-content animated fadeIn">
+  <div class="row">
+    <div class="col-md-4">
+      <div id="nestable-menu">
+        <button class="btn btn-primary btn-sm" (click)="downloadFilePost()" type="button">
+          <i class="fa fa-check"></i>&nbsp;Submit</button>
+        <button class="btn btn-info btn-sm" (click)="UpdateRequirement()" type="button">
+          <i class="fa fa-paste"></i> Save Changes</button>
+      </div>
+    </div>
+  </div>
+  <div class="ibox" id="ibox2">
+    <div class="ibox-content">
+      <div id="loader" class="loader sk-spinner sk-spinner-wave modal inmodal fade">
+        <div class="sk-rect1"></div>
+        <div class="sk-rect2"></div>
+        <div class="sk-rect3"></div>
+        <div class="sk-rect4"></div>
+        <div class="sk-rect5"></div>
+      </div>
+      <div class="row" id="ibox1">
+        <div class="col-lg-12">
+          <div class="tabs-container">
+            <tabset>
+              <tab class="jumbotron" *ngFor=" let fieldsetGroup of interventionReport.fieldSetGroups" [heading]="fieldsetGroup.name" [active]="fieldsetGroup.active">
+                <div class="wrapper wrapper-content animated fadeInRight">
+                  <div class="row" [hidden]="fieldset.isHidden" *ngFor=" let fieldset of fieldsetGroup.fieldSets">
+                    <div class="col-lg-12">
+                      <div class="ibox">
+                        <div class="ibox-title bg-success p-xs b-r-sm">
+                          <h5>{{fieldset.name}}</h5>
+                          <iboxtools></iboxtools>
+                        </div>
+                        <div class="ibox-content">
+                          <div class="form-horizontal">
+                            <div *ngFor="let field of fieldset.workItemFields">
+                              <div class="form-group" *ngIf="!field.hasToolTip">
+                                <div class="row">
+                                  <label class="col-sm-4 control-label pull-left LabelText">
+                                    <small>{{field.name}}</small>
+                                  </label>
+                                  <div class="col-sm-8">
+                                    <textarea rows="5" *ngIf="field.fieldType =='MultiLineTextBox'" [disabled]="!field.isEditable" [(ngModel)]="field.fieldValue"
+                                      (ngModelChange)='OnfieldChanged($event,field)' [disabled]="!field.isEditable" [maxLength]="field.fieldValueLength"
+                                      (blur)="onFieldBlur(field)" type="text" class="textAreaClass form-control"></textarea>
+                                    <input *ngIf="field.fieldType =='TextBox'" [disabled]="!field.isEditable" [(ngModel)]="field.fieldValue" (ngModelChange)='OnfieldChanged($event,field)'
+                                      [disabled]="!field.isEditable" [maxLength]="field.fieldValueLength" (blur)="onFieldBlur(field)"
+                                      type="text" class="form-control">
+                                    <input *ngIf="field.fieldType =='Email'" [disabled]="!field.isEditable" [(ngModel)]="field.fieldValue" (ngModelChange)='OnfieldChanged($event,field)'
+                                      [disabled]="!field.isEditable" maxlength="field.fieldValueLength" [maxLength]="field.fieldValueLength"
+                                      (blur)="onFieldBlur(field)" type="email" class="form-control">
+                                    <div class="input-group date" *ngIf="field.fieldType == 'DatePicker'">
+                                      <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                      </span>
+                                      <input type="date" (blur)="onFieldBlur(field)" [disabled]="!field.isEditable" [required]="field.isRequired" class="form-control"
+                                        [(ngModel)]="field.fieldValue">
+                                    </div>
+                                    <select (blur)="onFieldBlur(field)" [(ngModel)]="field.fieldValue" [disabled]="!field.isEditable" [required]="field.isRequired"
+                                      data-placeholder="Choose a Country..." class="form-control m-b" (ngModelChange)="updateRequirementAfterSelect($event,field,fieldsetGroup,fieldset)"
+                                      tabindex="2" *ngIf="field.fieldType =='DropDownList'">
+                                      <option [ngValue]="undefined" selected>Please select...</option>
+                                      <option *ngFor="let type of field.dropdownValues" [ngValue]="type.name">{{type.name}}</option>
+                                    </select>
+                                    <input (blur)="onFieldBlur(field)" [required]="!field.isRequired" [disabled]="!field.isEditable" *ngIf="field.fieldType =='NumericTextbox'"
+                                      [(ngModel)]="field.fieldValue" (ngModelChange)='OnfieldChanged($event,field)' type="text"
+                                      class="form-control">
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="form-group" *ngIf="field.hasToolTip">
+                                <div class="row">
+                                  <label class="col-sm-4 control-label pull-left LabelText">
+                                    <small>{{field.name}}</small>
+                                  </label>
+                                  <div class="col-sm-8">
+                                    <input (blur)="onFieldBlur(field)" *ngIf="field.fieldType =='TextBox'" [disabled]="!field.isEditable" [(ngModel)]="field.fieldValue"
+                                      (ngModelChange)='OnfieldChanged($event,field)' type="text" data-toggle="tooltip" [title]="field.toolTip"
+                                      class="form-control sefate-tooltip">
+                                    <div class="input-group date" *ngIf="field.fieldType == 'DatePicker'">
+                                      <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                      </span>
+                                      <input type="text" [disabled]="!field.isEditable" [required]="field.isRequired" class="form-control" [(ngModel)]="field.fieldValue">
+                                    </div>
+                                    <select (blur)="onFieldBlur(field)" [(ngModel)]="field.fieldValue" [disabled]="!field.isEditable" [required]="field.isRequired"
+                                      data-placeholder="Choose a Country..." class="form-control m-b" (ngModelChange)="updateRequirementAfterSelect($event,field,fieldsetGroup,fieldset)"
+                                      tabindex="2" *ngIf="field.fieldType =='DropDownList'">
+                                      <option [ngValue]="undefined" selected>Please select...</option>
+                                      <option *ngFor="let type of field.dropdownValues" [ngValue]="type.name">{{type.name}}</option>
+                                    </select>
+                                    <input (blur)="onFieldBlur(field)" [required]="field.isRequired" [disabled]="!field.isEditable" *ngIf="field.fieldType =='NumericTextbox'"
+                                      [(ngModel)]="field.fieldValue" (ngModelChange)='OnfieldChanged($event,field)' type="text"
+                                      class="form-control">
+                                  </div>
+                                </div>
+                              </div>
+                              <div [innerHTML]="field.errorMessage" *ngIf="!field.isValid" class="alert alert-danger">
+                                <small>{{field.errorMessage}}</small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ibox-title">
+                  <span (click)="AddNewIssue(fieldsetGroup)" class="btn btn-success btn-xs pull-right">Add New</span>
+                </div>
+              </tab>
+            </tabset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal inmodal fade" id="errorModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header bg-infor">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title">Alert</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{errorMessage}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal inmodal fade" id="loader" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p>{{errorMessage}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

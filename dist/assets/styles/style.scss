@@ -1,0 +1,194 @@
+/*
+ *
+ *   INSPINIA - Responsive Admin Theme
+ *   version 2.7.1
+ *
+*/
+
+// Google Fonts
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+// Variables, Mixins
+@import "imports/variables";
+@import "imports/mixins";
+// INSPINIA Theme Elements
+@import "imports/typography";
+@import "imports/navigation";
+@import "imports/top_navigation";
+@import "imports/buttons";
+@import "imports/badges_labels";
+@import "imports/elements";
+@import "imports/sidebar";
+@import "imports/base";
+@import "imports/pages";
+@import "imports/chat";
+@import "imports/metismenu";
+@import "imports/spinners";
+// Landing page styles
+@import "imports/landing";
+// RTL Support
+@import "imports/rtl";
+// For demo only - config box style
+@import "imports/theme-config";
+// INSPINIA Skins
+@import "imports/skins";
+@import "imports/md-skin";
+// Media query style
+@import "imports/media";
+// Custom style
+// Your custom style to override base style
+@import "imports/custom";
+// Clear layout on print mode
+@media print {
+  nav.navbar-static-side {
+    display: none;
+  }
+  body {
+    overflow: visible !important;
+  }
+  #page-wrapper {
+    margin: 0;
+  }
+}
+
+.LabelText {
+  text-align: left !important;
+}
+
+.sefate-tooltip+.tooltip>.tooltip-inner {
+  background-color: #21b9bb;
+  border-color: #21b9bb;
+  color: #ffffff;
+}
+
+.stages {
+  top: 30px;
+}
+
+.updated {
+  color: #1ab394;
+}
+
+.loader {
+  height: 35px !important;
+  width: 35px !important;
+  overflow-y: hidden !important; // hide vertical
+  overflow-x: hidden !important; // hide horizontal
+}
+
+.unit {
+    background: rgba(236, 229, 229, 0.267);
+    padding: 25px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px rgb(22, 22, 24) solid;
+    border-radius: 3px;
+    margin-top: 20px;
+}
+
+.textAreaClass{
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.egg {
+    min-height: 58px;
+    padding-bottom: 8px;
+    position: relative;
+}
+.egg_Body {
+    border-top: 1px solid #eee;
+    color: #808080;
+    padding-top: 8px;
+}
+.egg_Message {
+    font-size: 13px !important;
+    font-weight: normal;
+    overflow: hidden;
+}
+
+h3 {
+    font-size: 13px;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+.comment_ui {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #e5eaf1;
+    clear: left;
+    float: none;
+    overflow: hidden;
+    margin-bottom: 2px;
+    padding: 6px 4px 3px 6px;
+    width: 431px;
+}
+.dddd {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #e5eaf1;
+    clear: left;
+    float: none;
+    overflow: hidden;
+    margin-bottom: 2px;
+    padding: 6px 4px 3px 6px;
+    width: 431px;
+}
+.comment_text {
+    padding: 2px 0 4px;
+    color: #333333;
+}
+.comment_actual_text {
+    display: inline;
+    padding-left: .4em;
+}
+
+ol {
+    list-style: none;
+    margin: 0 auto;
+    width: 500px;
+    margin-top: 20px;
+}
+.clean {
+    display: none;
+}
+.editbox {
+    overflow: hidden;
+    height: 61px;
+    border: solid 1px #0099CC;
+    min-width: 488px;
+    max-width: 488px;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 5px;
+}
+#but {
+    background-color: #5B74A8;
+    border: 1px solid #29447e;
+    padding: 2px 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #FFFFFF;
+    float: right;
+    cursor: pointer;
+    margin-top: 2px;
+}
+#buts {
+    background-color: #5B74A8;
+    border: 1px solid #29447e;
+    padding: 2px 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #FFFFFF;
+    float: right;
+    cursor: pointer;
+    height: 32px;
+}
+.egg_Message img {
+    float: left;
+    padding-right: 7px;
+}
+#sssss {
+    float: right;
+    width: 392px;
+}
+
+.Logout{
+  color: #FFFFFF !important;
+}

@@ -1,0 +1,219 @@
+<div class="wrapper wrapper-content jumbotron">
+  <div class="wrapper wrapper-content animated fadeIn">
+    <div id="loader" class="loader sk-spinner sk-spinner-wave modal inmodal fade">
+      <div class="sk-rect1"></div>
+      <div class="sk-rect2"></div>
+      <div class="sk-rect3"></div>
+      <div class="sk-rect4"></div>
+      <div class="sk-rect5"></div>
+    </div>
+    <div class="row" id="content">
+      <div class="col-lg-12" id="workItems">
+        <div class="ibox">
+          <div class="ibox-content">
+            <h2>Clients</h2>
+            <div class="clients-list">
+              <tabset>
+                <tab *ngFor=" let tab of workItemsGrid.statusGridViews" [heading]="tab.status" (select)="tab.active = true" [active]="tab.active"
+                  (deselect)="tab.active = false">
+                  <div class="input-group">
+                    <input type="text" placeholder="Search client " class="input form-control">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn btn-success">
+                        <i class="fa fa-search"></i> Search</button>
+                    </span>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Item ID</th>
+                          <th>Client Name </th>
+                          <th>Registration No </th>
+                          <th>Created Date </th>
+                          <th>Modified Date </th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr (click)="showProfileOnClick(item)" *ngFor="let item of tab.currentPage.workItems">
+                          <td>{{ item.workItemID }}</td>
+                          <td>{{ item.primaryClient.clientName }}</td>
+                          <td>{{ item.primaryClient.registrationNo }}</td>
+                          <td>{{ item.createdDate }}</td>
+                          <td>{{ item.modifiedDate }}</td>
+                          <td>
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <a (click)="ViewWorkItem(item)" class="btn btn-white btn-sm">
+                                  <i class="fa fa-folder"></i> View </a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="btn-toolbar" role="toolbar" style="margin: 0;">
+                      <div class="btn-group">
+                        <label style="margin-top:10px"></label>
+                      </div>
+                      <div class="btn-group pull-right">
+                        <ul class="pagination pull-right">
+                          <li class="footable-page-arrow disabled">
+                            <a data-page="first">«</a>
+                            <li class="footable-page-arrow" [ngClass]="{'disabled': tab.currentPage.pageNumber==1}">
+                              <a (click)="Prev(tab.currentPage,tab)">‹</a>
+                            </li>
+                            <li *ngFor="let page of tab.statusGridViewPages" [ngClass]="{'active': tab.currentPage.pageNumber == page.pageNumber}">
+                              <a [ngClass]="{'bg-success': tab.currentPage.pageNumber == page.pageNumber}" (click)="setPage(page,tab)">{{page.pageNumber}}</a>
+                            </li>
+                            <li class="footable-page-arrow" [ngClass]="{'disabled': tab.currentPage.pageNumber==tab.statusGridViewPages.length}">
+                              <a (click)="Next(tab.currentPage,tab)" data-page="next">›</a>
+                            </li>
+                            <li class="footable-page-arrow">
+                              <a href="#last" data-page="last">»</a>
+                            </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </tab>
+              </tabset>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="profile">
+        <div class="row">
+          <div class="col-lg-12 sidebar-collapse">
+            <div class="ibox">
+              <div class="ibox-content">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-2 pull-right">
+                      <a (click)="hideProfileOnClick()" class="btn btn-danger btn-xs">close</a>
+                    </div>
+                    <div class="col-lg-2 pull-right">
+                      <a (click)="clientReview()" class="btn btn-info btn-xs">full profile</a>
+                    </div>
+                    <div class="col-lg-6">
+                      <h2>{{currentProfile.primaryClient.clientName}}</h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-5">
+                    <dl class="dl-horizontal">
+                      <dt>Status:</dt>
+                      <dd>
+                        <span class="label label-primary">{{currentProfile.workItemStatusInfor.status}}</span>
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-5">
+                    <dl class="dl-horizontal">
+                      <dt>Created by:</dt>
+                      <dd *ngIf="currentProfile.createdBy">{{currentProfile.createdBy.fullname}}</dd>
+                      <dt>Item ID:</dt>
+                      <dd>{{currentProfile.workItemID}}</dd>
+                      <dt>Reg no:</dt>
+                      <dd>{{currentProfile.primaryClient.registrationNo}}</dd>
+                      <dt>Contact Person:</dt>
+                      <dd> {{currentProfile.clientProfile.contactPerson}} </dd>
+                      <dt>Contact:</dt>
+                      <dd> {{currentProfile.clientProfile.contacts}} </dd>
+                      <dt>Website:</dt>
+                      <dd> {{currentProfile.clientProfile.website}} </dd>
+                    </dl>
+                  </div>
+                </div>
+                <div class="row m-t-sm">
+                  <div class="col-lg-12">
+                    <div class="panel blank-panel">
+                      <div class="panel-heading">
+                        <div class="panel-options">
+                          <ul class="nav nav-tabs">
+                            <li class="active">
+                              <a href="#tab-1" data-toggle="tab">Entity Documents</a>
+                            </li>
+                            <li class="">
+                              <a href="#tab-2" data-toggle="tab">Timeline</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div class="panel-body">
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="tab-1">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="ibox float-e-margins">
+                                  <div class="ibox-title">
+                                    <iboxtools></iboxtools>
+                                  </div>
+                                  <div class="ibox-content">
+                                    <div>
+                                      <div class="feed-activity-list">
+                                        <div *ngFor=" let documentField of currentProfile.workItemDocuments" class="feed-element">
+                                          <div class="media-body ">
+                                            <span [ngClass]="GetDocumentStatusCSS(documentField.documentStatus.statusID)">{{GetDocumentStatusText(documentField.documentStatus.statusID)}}</span>
+                                            <a (click)="GetFileById(documentField)">
+                                              <strong>{{documentField.documentName}}</strong>
+                                            </a>
+                                            <br>
+                                            <small class="text-muted">{{documentField.documentType}}</small>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="tab-2">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="ibox float-e-margins">
+                                  <div class="ibox-content">
+                                    <table class="table table-hover no-margins">
+                                      <thead>
+                                        <tr>
+                                          <th>Status</th>
+                                          <th>Date</th>
+                                          <th>User</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let timeline of currentProfile.workItemTimeLine">
+                                          <td>
+                                            <span class="label label-primary">{{timeline.workItemStage}}</span>
+                                          </td>
+                                          <td>
+                                            <i class="fa fa-clock-o"></i> {{timeline.createDate}}</td>
+                                          <td>{{timeline.createdUser}}</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="wrapper wrapper-content">
+  <div class="row jumbotron ">
+    <div *ngFor="let quardrant of incubatorRequirement.incubatorQuardrants" class="col-lg-3">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <span (click)="DrillOntoQuardrant(quardrant)" class="btn btn-success btn-xs pull-right">Drill down</span>
+          <h5>{{quardrant.name}}</h5>
+        </div>
+        <div class="ibox-content">
+          <h1 class="no-margins">{{quardrant.scoreCard.value}}</h1>
+          <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
+          <small>Improvement</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title bg-success">
+          <h5>Review comments</h5>
+          <iboxtools></iboxtools>
+        </div>
+        <div class="ibox-content">
+          <div class="feed-activity-list">
+            <div *ngFor ="let comment of workItemIncubatorComments" class="feed-element">
+              <div>
+                <strong>{{comment.shortDescription}}</strong>
+                <div>{{comment.commentText}}</div>
+                <small class="text-muted">{{comment.createdDateTime}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title bg-success">
+              <h5>Client Timeline</h5>
+              <iboxtools></iboxtools>
+            </div>
+            <div class="ibox-content">
+              <table class="table table-hover no-margins">
+                <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>User</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let timeline of workItemTimeLine">
+                  <td><span class="label label-success">{{timeline.workItemStage}}</span> </td>
+                  <td><i class="fa fa-clock-o"></i> {{timeline.createDate}}</td>
+                  <td>{{timeline.createdUser}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div id="nestable-menu">
+        <button  (click)="CreateInterventionReport()" class="btn btn-info btn-sm" type="button"><i class="fa fa-paste"></i>Create BIR</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal inmodal fade" id="loader" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p>{{errorMessage}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

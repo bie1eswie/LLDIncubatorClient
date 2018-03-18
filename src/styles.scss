@@ -1,0 +1,21 @@
+/* Import main Inspinia style */
+@import "assets/styles/style";
+@import "assets/styles/imports/_custom";
+@import "assets/styles/imports/_elements.scss";
+@import "assets/styles/imports/_badges_labels.scss";
+@import "assets/styles/imports/_base.scss";
+@import "assets/styles/imports/_chat.scss";
+@import "assets/styles/imports/_landing.scss";
+@import "assets/styles/imports/_md-skin.scss";
+@import "assets/styles/imports/_media.scss";
+@import "assets/styles/imports/_metismenu.scss";
+@import "assets/styles/imports/_mixins.scss";
+@import "assets/styles/imports/_navigation.scss";
+@import "assets/styles/imports/_pages.scss";
+@import "assets/styles/imports/_rtl.scss";
+@import "assets/styles/imports/_sidebar.scss";
+@import "assets/styles/imports/_skins.scss";
+@import "assets/styles/imports/_spinners.scss";
+@import "assets/styles/imports/_buttons.scss";
+@import "assets/styles/select.scss";
+@import "../node_modules/fullcalendar/dist/fullcalendar.min.css";

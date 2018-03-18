@@ -1,0 +1,15 @@
+
+
+<ul class="nav" [ngClass]="classMap" (click)="$event.preventDefault()">
+        <li *ngFor ="let tabz of tabs" class="nav-item" [class.bg-success]="tabz.active"
+          [class.active]="tabz.active" [class.disabled]="tabz.disabled">
+          <a href class="nav-link" data-toggle="tab"
+            [class.active]="tabz.active" [class.bg-success]="tabz.active" [class.disabled]="tabz.disabled"
+            (click)="tabz.active = true">
+            <span ngTransclude="tabz.headingRef">{{tabz.heading}}</span>
+          </a>
+        </li>
+</ul>
+    <div class="tab-content">
+      <ng-content></ng-content>
+    </div>

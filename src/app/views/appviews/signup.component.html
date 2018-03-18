@@ -1,0 +1,56 @@
+<div class="middle-box text-center loginscreen   animated fadeInDown">
+  <div>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{errorMessage}}
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{successMessage}}
+    </div>
+    <h3>Register to LLD Service Incubator</h3>
+    <p>Create account to see it in action.</p>
+    <form class="m-t" #registerForm="ngForm">
+      <div class="form-group">
+        <input type="text" class="form-control input-lg" placeholder="Company name" [(ngModel)]="_newUser.fullname" name="fullname"
+          #fullname="ngModel" required>
+        <div [hidden]="fullname.valid || fullname.untouched" class="alert alert-danger">
+          Company name is required
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control input-lg" placeholder="CIPC Reg Number" [(ngModel)]="_newUser.username" name="username"
+          #username="ngModel" required>
+        <div [hidden]="username.valid || username.untouched" class="alert alert-danger">
+          Username is required
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="email" class="form-control input-lg" placeholder="Email" [(ngModel)]="_newUser.email" name="email" #email="ngModel"
+          required>
+        <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
+          Email is required
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control input-lg" placeholder="Password" [(ngModel)]="_newUser.password" name="password"
+          #password="ngModel" required>
+        <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
+          Password is required
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary block full-width m-b" (click)="register()" [disabled]="!registerForm.form.valid">Register</button>
+      </div>
+      <p class="text-muted text-center"><small>Already have an account?</small></p>
+      <a class="btn btn-sm btn-white btn-block" [routerLink]="['/login']">Login</a>
+    </form>
+    <p class="m-t"> <small>We take business to higher levels &copy; 2014</small> </p>
+  </div>
+</div>
+
+<div id="loader" class="loader sk-spinner sk-spinner-wave modal inmodal fade">
+  <div class="sk-rect1"></div>
+  <div class="sk-rect2"></div>
+  <div class="sk-rect3"></div>
+  <div class="sk-rect4"></div>
+  <div class="sk-rect5"></div>
+</div>

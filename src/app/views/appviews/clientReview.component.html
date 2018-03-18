@@ -1,0 +1,175 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-4">
+    <h2> Company Profile</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a [routerLink]="['/starterview']">Home</a>
+      </li>
+      <li class="active">
+        <strong> Information</strong>
+      </li>
+    </ol>
+  </div>
+  <div class="col-lg-8 stages">
+    <div class="row">
+      <div class="col-lg-2" *ngFor="let stage of workItemRequirement.workItemStages">
+        <span [ngClass]="stage.isActive ? 'label label-success label-xs tag' : 'label label-default label-xs tag'" class="">{{stage.stage}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="wrapper wrapper-content animated fadeIn">
+  <div class="ibox" id="ibox2">
+    <div class="ibox-content">
+    <div id="loader"  class="loader sk-spinner sk-spinner-wave modal inmodal fade">
+        <div class="sk-rect1"></div>
+        <div class="sk-rect2"></div>
+        <div class="sk-rect3"></div>
+        <div class="sk-rect4"></div>
+        <div class="sk-rect5"></div>
+    </div>
+      <div class="row" id="ibox1">
+        <div class="col-lg-12">
+          <div class="tabs-container">
+            <tabset>
+              <tab *ngFor=" let requirementTab of workItemRequirement.requirementsTabs" [heading]="requirementTab.name" [active]="requirementTab.active"
+                (select)="requirementTab.active = true" (deselect)="requirementTab.active = false">
+                <div *ngFor=" let fieldsetGroup of requirementTab.fieldSetGroups">
+                  <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="row" [hidden]="fieldset.isHidden" *ngFor=" let fieldset of fieldsetGroup.fieldSets">
+                      <div class="col-lg-12">
+                        <div class="ibox">
+                          <div class="ibox-title bg-success p-xs b-r-sm">
+                            <h5>{{fieldset.name}}</h5>
+                            <iboxtools></iboxtools>
+                          </div>
+                          <div class="ibox-content">
+                            <div class="form-horizontal">
+                              <div *ngFor="let field of fieldset.workItemFields">
+                                <div class="form-group" *ngIf="!field.hasToolTip">
+                                  <div class="row">
+                                    <label class="col-sm-4 control-label pull-left LabelText"><small>{{field.name}}</small></label>
+                                    <div class="col-sm-8">
+                                      <input *ngIf="field.fieldType =='TextBox'" [disabled]="true" [(ngModel)]="field.fieldValue" (ngModelChange)='OnfieldChanged($event,field)'
+                                        [disabled]="true" (blur)="onFieldBlur(field)" type="text" class="form-control">
+                                      <div class="input-group date" *ngIf="field.fieldType == 'DatePicker'">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input type="text" (blur)="onFieldBlur(field)" [disabled]="true" [required]="field.isRequired" class="form-control"
+                                          [(ngModel)]="field.fieldValue">
+                                      </div>
+                                      <select (blur)="onFieldBlur(field)" [(ngModel)]="field.fieldValue" [disabled]="true" [required]="field.isRequired"
+                                        data-placeholder="Choose a Country..." class="form-control m-b" (ngModelChange)="updateRequirementAfterSelect($event,field,requirementTab.index,fieldsetGroup)"
+                                        tabindex="2" *ngIf="field.fieldType =='DropDownList'">
+                                                              <option [ngValue]="undefined" selected>Please select...</option>
+                                                              <option *ngFor="let type of field.dropdownValues" [ngValue]="type.name">{{type.name}}</option>
+                                                          </select>
+                                      <div *ngIf="field.fieldType == 'DocumentUploadField'" class="input-group">
+                                        <label class="input-group-addon btn btn-success"><i class="fa fa-file-text"></i>
+                                                              <input type="file" (blur)="onFieldBlur(field)" [disabled]="true" [required]="field.isRequired" (change)="addFile($event,field)" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" name="file" id="inputImage" class="hide">
+                                                              </label>
+                                        <input (blur)="onFieldBlur(field)" [(ngModel)]="field.fieldValue" [disabled]="true" (ngModelChange)='OnfieldChanged($event,field)'
+                                          type="text" class="form-control">
+                                      </div>
+                                      <input (blur)="onFieldBlur(field)" [required]="!field.isRequired" [disabled]="true" *ngIf="field.fieldType =='NumericTextbox'"
+                                        [(ngModel)]="field.fieldValue" (ngModelChange)='OnfieldChanged($event,field)' type="text"
+                                        class="form-control">
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="form-group" *ngIf="field.hasToolTip">
+                                  <div class="row">
+                                    <label class="col-sm-4 control-label pull-left LabelText"><small>{{field.name}}</small></label>
+                                    <div class="col-sm-8">
+                                      <input (blur)="onFieldBlur(field)" *ngIf="field.fieldType =='TextBox'" [disabled]="true" [(ngModel)]="field.fieldValue"
+                                        (ngModelChange)='OnfieldChanged($event,field)' type="text" data-toggle="tooltip" [title]="field.toolTip"
+                                        class="form-control sefate-tooltip">
+                                      <div class="input-group date" *ngIf="field.fieldType == 'DatePicker'">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input type="text" [disabled]="true" [required]="field.isRequired" class="form-control" [(ngModel)]="field.fieldValue">
+                                      </div>
+                                      <select (blur)="onFieldBlur(field)" [(ngModel)]="field.fieldValue" [disabled]="true" [required]="field.isRequired"
+                                        data-placeholder="Choose a Country..." class="form-control m-b" (ngModelChange)="updateRequirementAfterSelect($event,field,requirementTab.index)"
+                                        tabindex="2" *ngIf="field.fieldType =='DropDownList'">
+                                                              <option [ngValue]="undefined" selected>Please select...</option>
+                                                              <option *ngFor="let type of field.dropdownValues" [ngValue]="type.name">{{type.name}}</option>
+                                                          </select>
+                                      <div *ngIf="field.fieldType == 'DocumentUploadField'" class="input-group">
+                                        <label class="input-group-addon btn btn-success"><i class="fa fa-file-text"></i>
+                                                              <input (blur)="onFieldBlur(field)" type="file" [disabled]="true" [required]="field.isRequired" (change)="addFile($event,field)" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" name="file" id="inputImage">
+                                                              </label>
+                                        <input (blur)="onFieldBlur(field)" [(ngModel)]="field.fieldValue" [disabled]="true" [required]="field.isRequired"
+                                          (ngModelChange)='OnfieldChanged($event,field)' type="text" class="form-control">
+                                      </div>
+                                      <input (blur)="onFieldBlur(field)" [required]="field.isRequired" [disabled]="true" *ngIf="field.fieldType =='NumericTextbox'"
+                                        [(ngModel)]="field.fieldValue" (ngModelChange)='OnfieldChanged($event,field)' type="text"
+                                        class="form-control">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div *ngIf="!field.isValid" class="alert alert-danger">
+                                  <small>{{field.errorMessage}}</small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </tab>
+              <tab *ngIf="workItemRequirement.hasDocuments && showDocuments" [heading]="workItemRequirement.documentsTab.name">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="wrapper wrapper-content animated fadeInUp">
+                      <div class="ibox">
+                        <div class="bg-success ibox-title">
+                          <h5>All documents uploaded to this client </h5>
+                        </div>
+                        <div class="ibox-content">
+                          <div class="row m-b-sm m-t-sm">
+                            <div class="col-md-11">
+                              <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
+                                                      <button type="button" class="btn btn-sm btn-success"> Go!</button> </span></div>
+                            </div>
+                          </div>
+                          <div class="project-list">
+                            <table class="table table-hover">
+                              <thead>
+                                <th>Document Type </th>
+                                <th>Document Name </th>
+                                <th>Document Status </th>
+                                <th>Download </th>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor=" let documentField of workItemRequirement.documentsTab.documentFields">
+                                  <td class="project-title">
+                                    {{documentField.fieldName}}
+                                  </td>
+                                  <td class="project-completion">
+                                    {{documentField.fieldValue}}
+                                  </td>
+                                  <td class="project-status">
+                                    <span  [ngClass]="GetDocumentStatusCSS(documentField.workItemDocument.documentStatus.statusID)">{{GetDocumentStatusText(documentField.workItemDocument.documentStatus.statusID)}}</span>
+                                  </td>
+                                  <td class="project-actions">
+                                    <button class="btn btn-white btn-sm pull-left" ><i class="fa fa-folder"></i> Download </button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </tab>
+            </tabset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

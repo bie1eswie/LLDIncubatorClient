@@ -1,0 +1,56 @@
+﻿<div class="row">
+
+    <!-- search row -->
+    <div class="row">
+        <div class="col-sm-8">
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+            </form>
+        </div>
+
+        <div class="col-sm-4" id="notification">
+
+        </div>
+    </div>
+
+    <!-- the list of addresses -->
+    <div class="row">
+        <div class="col-sm-8">
+            <div *ngFor="#contact of contacts" class="col-lg-12 unit">
+                <h3><strong>{{contact.firstname}}  {{contact.lastName}}</strong></h3>
+                <h3>{{address.role}}</h3>
+                <ul>
+                    <li *ngFor="let tag of address.tags">
+                        <span class="">
+                            {{tag.displayText}}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="col-lg-12">
+                <table style="width:100%" class="table table-striped">
+                    <tr>
+                        <td><strong>Phone</strong></td>
+                        <td>{{ contact.phone }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Email</strong></td>
+                        <td>{{ contact.email }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LinkedIn</strong></td>
+                        <td>{{ contact.linkedIn }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Skype</strong></td>
+                        <td>{{ contact.skype }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
